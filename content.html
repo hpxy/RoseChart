@@ -1,0 +1,135 @@
+<html>
+<head>
+  <style>
+  @font-face {
+    font-family: mipro;
+    src: url('./mipro.ttf'); 
+  }
+  canvas {
+    background-color: white;
+  }
+  </style>
+</head>
+
+<body>
+  <canvas id="maincanvas">
+    <span>HS2s[2]</span>
+    <span>san-b:0.67582(i-13.5721)</span>
+    <span>0.48 0.64 0.57 0.42 0.38 1.01</span>
+  </canvas>
+</body>
+<script>
+    var height = 380
+    var width  = 300
+    centerX = 150;
+    centerY = 160;
+    
+    var canvas = document.getElementById("maincanvas");
+    canvas.width = width.toString()
+    canvas.height = height.toString()
+    var context = canvas.getContext('2d');
+    
+    var canvas_children = canvas.children
+    var c_title = canvas_children[0].innerHTML
+    var c_name  = canvas_children[1].innerHTML
+    var c_value = canvas_children[2].innerHTML.split(' ')
+    var _c_value_max = window.Math.max.apply( Math, c_value);
+    for (i=0;i<c_value.length;i++) c_value[i] = c_value[i] / _c_value_max
+    
+    // console.log(c_value)
+    var glay = "#D0D0D0"
+    var black = "#000"
+    var fillcolor = "rgba(40,81,161,0.65)"
+    var fontcolor = "#111"
+    
+    sin = window.Math.sin
+    cos = window.Math.cos
+    tan = window.Math.tan
+    pi  = window.Math.PI
+    
+    function drawHexagon(context,center,width,color) {
+        var centerX = center[0]
+        var centerY = center[1]
+
+        var q_3 = 1.7320508
+        var height = width
+        var width  = width
+        
+        var a_h = height / 4
+        var a_h_2 = height / 2
+        var b_h = a_h * q_3
+        
+        var width = 2 * b_h
+        var height = 4 * a_h
+        
+        context.beginPath();
+        context.moveTo(centerX,centerY-a_h_2);
+        context.lineTo(centerX+b_h,centerY-a_h);
+        context.lineTo(centerX+b_h,centerY+a_h);
+        context.lineTo(centerX,centerY+a_h_2);
+        context.lineTo(centerX-b_h,centerY+a_h);
+        context.lineTo(centerX-b_h,centerY-a_h);
+        context.closePath();
+        
+        context.strokeStyle = color;
+        context.stroke();
+    }
+    drawHexagon(context,[centerX,centerY],width,black)
+    drawHexagon(context,[centerX,centerY],width/4*3,glay)
+    drawHexagon(context,[centerX,centerY],width/4*2,glay)
+    drawHexagon(context,[centerX,centerY],width/4*1,glay)
+    
+    // draw line
+        var q_3 = 1.7320508
+        var height = width
+        var width  = width
+        
+        var a_h = height / 4
+        var a_h_2 = height / 2
+        var b_h = a_h * q_3
+        
+        var width = 2 * b_h
+        var height = 4 * a_h
+        context.beginPath();
+        context.moveTo(centerX,centerY-a_h_2);
+        context.lineTo(centerX,centerY+a_h_2);
+        context.moveTo(centerX+b_h,centerY-a_h); 
+        context.lineTo(centerX-b_h,centerY+a_h);
+        context.moveTo(centerX-b_h,centerY-a_h);
+        context.lineTo(centerX+b_h,centerY+a_h);
+        context.closePath();
+        context.strokeStyle = glay;
+        context.stroke();
+    
+    _value_1 = c_value[0]*b_h
+    context.beginPath();
+    context.moveTo(centerX,centerY-_value_1)
+    
+    _value_2 = c_value[1]*b_h
+    context.lineTo(centerX+_value_2*cos(pi/6),centerY-_value_2*sin(pi/6));
+    
+    _value_3 = c_value[2]*b_h
+    context.lineTo(centerX+_value_3*cos(pi/6),centerY+_value_3*sin(pi/6));
+    
+    _value_4 = c_value[3]*b_h
+    context.lineTo(centerX,centerY+_value_4)
+    
+    _value_5 = c_value[4]*b_h
+    context.lineTo(centerX-_value_5*cos(pi/6),centerY+_value_5*sin(pi/6));
+    
+    _value_6 = c_value[5]*b_h
+    context.lineTo(centerX-_value_6*cos(pi/6),centerY-_value_6*sin(pi/6));
+    
+    context.closePath();
+    context.strokeStyle = glay;
+    context.stroke();
+    context.fillStyle = fillcolor;
+    context.fill()
+    
+    context.font = "15px mipro"
+    context.textAlign = 'center';
+    context.fillStyle = fontcolor;
+    context.fillText(c_title,centerX,centerY+b_h+40)
+    context.fillText("@"+c_name,centerX,centerY+b_h+60)
+</script>
+</html>
